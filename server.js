@@ -8,9 +8,11 @@ const authRoute = require('./routers/authRoute')
 const availabilityRoute = require('./routers/availabilityRoute')
 const appointmentRoute = require('./routers/appointmentRoute')
 
-// Middlewares
+// Middleware
+app.use(express.json())
 
 // Routes
+app.get('/', (req, res) => res.json({ message: 'API is running' }))
 app.use('/auth', authRoute)
 app.use('/availability', availabilityRoute)
 app.use('/appointments', appointmentRoute)
