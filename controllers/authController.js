@@ -8,7 +8,6 @@ const handleRegistration = async (req, res) => {
     const { name, email, password, role } = req.body
 
     try {
-
         // Validate Input
         if (!email || !password || !name) {
             return res.status(400).json({
