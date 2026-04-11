@@ -7,9 +7,11 @@ require('./config/db')
 const authRoute = require('./routes/authRoute')
 const availabilityRoute = require('./routes/availabilityRoute')
 const appointmentRoute = require('./routes/appointmentRoute')
+const cookieParser = require('cookie-parser')
 
 // Middleware
 app.use(express.json())
+app.use(cookieParser())
 
 // Routes
 app.get('/', (req, res) => res.json({ message: 'API is running' }))
