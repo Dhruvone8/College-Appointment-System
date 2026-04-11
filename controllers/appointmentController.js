@@ -60,7 +60,7 @@ const handleGetMyAppointments = async (req, res) => {
         const appointments = await Appointment.find(query)
             .populate('studentId', 'name email')
             .populate('professorId', 'name email')
-            .populate('availabilitySlotId', 'startTime endTime');
+            .populate('slotId', 'startTime endTime');
 
         res.status(200).json({
             success: true,
@@ -96,7 +96,7 @@ const handleCancelAppointment = async (req, res) => {
         await appointment.save();
 
         // Make the slot free again
-        await Availability.findByIdAndUpdate(appointment.availabilitySlotId, { isBooked: false });
+        await Availability.findByIdAndUpdate(appointment.slotId, { isBooked: false });
 
         return res.status(200).json({ message: "Appointment cancelled successfully" });
     } catch (error) {
