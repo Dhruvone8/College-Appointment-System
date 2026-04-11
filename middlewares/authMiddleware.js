@@ -4,7 +4,6 @@ const User = require("../models/UserModel")
 // Middleware to check if user is logged in
 const isLoggedIn = async (req, res, next) => {
     try {
-
         // Get token from cookies
         const token = req.cookies.token;
 
