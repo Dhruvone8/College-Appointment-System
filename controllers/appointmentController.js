@@ -34,7 +34,7 @@ const handleBookAppointment = async (req, res) => {
         const appointment = await Appointment.create({
             studentId,
             professorId,
-            availabilitySlotId,
+            slotId: availabilitySlotId,
             status: "confirmed"
         })
 
