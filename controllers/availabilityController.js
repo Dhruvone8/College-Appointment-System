@@ -1,4 +1,5 @@
 const Availability = require("../models/AvailabilityModel");
+const User = require("../models/UserModel")
 const mongoose = require("mongoose")
 
 const handleAvailability = async (req, res) => {
