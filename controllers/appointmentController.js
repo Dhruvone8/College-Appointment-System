@@ -2,16 +2,16 @@ const Appointment = require("../models/AppointmentModel")
 const Availability = require("../models/AvailabilityModel")
 
 const handleBookAppointment = async (req, res) => {
-    const { professorId, availabilitySlodId } = req.body;
+    const { professorId, availabilitySlotId } = req.body;
 
     try {
-        if (!professorId || !availabilitySlodId) {
+        if (!professorId || !availabilitySlotId) {
             return res.status(400).json({ message: "Professor ID and Availability Slot ID are required" })
         }
 
         const studentId = req.user.id;
 
-        const slot = await Availability.findById(availabilitySlodId);
+        const slot = await Availability.findById(availabilitySlotId);
 
         // Check if slot exists
         if (!slot) {
@@ -20,7 +20,7 @@ const handleBookAppointment = async (req, res) => {
 
         // Book the slot, use atomicity
         const bookSlot = await Availability.findOneAndUpdate(
-            { _id: availabilitySlodId, isBooked: false },
+            { _id: availabilitySlotId, isBooked: false },
             { isBooked: true },
             { new: true }
         )
@@ -34,7 +34,7 @@ const handleBookAppointment = async (req, res) => {
         const appointment = await Appointment.create({
             studentId,
             professorId,
-            availabilitySlodId,
+            availabilitySlotId,
             status: "confirmed"
         })
 
@@ -60,7 +60,7 @@ const handleGetMyAppointments = async (req, res) => {
         const appointments = await Appointment.find(query)
             .populate('studentId', 'name email')
             .populate('professorId', 'name email')
-            .populate('availabilitySlodId', 'startTime endTime');
+            .populate('availabilitySlotId', 'startTime endTime');
 
         res.status(200).json({
             success: true,
@@ -96,7 +96,7 @@ const handleCancelAppointment = async (req, res) => {
         await appointment.save();
 
         // Make the slot free again
-        await Availability.findByIdAndUpdate(appointment.availabilitySlodId, { isBooked: false });
+        await Availability.findByIdAndUpdate(appointment.availabilitySlotId, { isBooked: false });
 
         return res.status(200).json({ message: "Appointment cancelled successfully" });
     } catch (error) {
