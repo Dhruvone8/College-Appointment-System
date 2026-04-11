@@ -5,7 +5,12 @@ const User = require("../models/UserModel")
 const isLoggedIn = async (req, res, next) => {
     try {
         // Get token from cookies
-        const token = req.cookies.token;
+        let token = req.cookies.token;
+
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.split(" ")[1];
+        }
 
         // If token doesn't exist -> User is not logged in
         if (!token) {
