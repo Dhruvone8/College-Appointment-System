@@ -4,9 +4,9 @@ const port = process.env.PORT || 3000
 const dotenv = require('dotenv')
 dotenv.config()
 require('./config/db')
-const authRoute = require('./routers/authRoute')
-const availabilityRoute = require('./routers/availabilityRoute')
-const appointmentRoute = require('./routers/appointmentRoute')
+const authRoute = require('./routes/authRoute')
+const availabilityRoute = require('./routes/availabilityRoute')
+const appointmentRoute = require('./routes/appointmentRoute')
 
 // Middleware
 app.use(express.json())
